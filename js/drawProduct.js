@@ -14,17 +14,43 @@ export const drawProduct = async () => {
         product.innerHTML = `
             <p>Không thể tải sản phẩm. Vui lòng thử lại sau</p>
         `;
-
         return;
     }
 
     // Lưu tất cả sản phẩm vào mảng
     allProducts = data;
 
+    // Lọc theo từ khóa tìm kiếm
     let filteredProducts = allProducts.filter(product => {
             return product.title.toLowerCase().includes(params.q.toLowerCase())
         }
     );
+
+    // Lọc theo danh mục
+    if (params.category !== "ALL") {
+        filteredProducts = filteredProducts.filter((product) => {
+            return product.category === params.category;
+        });
+    }
+
+        // Sắp xếp
+        if (params.sortField !== "default") {
+            filteredProducts.sort((a, b) => {
+                if (params.sortField === "price") {
+                    return a.price - b.price;
+                }
+    
+                if (params.sortField === "-price") {
+                    return b.price - a.price;
+                }
+    
+                if (params.sortField === "discountPercentage") {
+                    return b.discountPercentage - a.discountPercentage;
+                }
+            });
+        }
+
+
 
     // Hiển thị sản phẩm
     let htmls = filteredProducts.map((product) => {
