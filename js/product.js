@@ -7,7 +7,10 @@ drawProduct();
 const searchButton = document.querySelector("#search button");
 const inputSearch = document.querySelector("#search input");
 
-searchButton.addEventListener("click",() => {
-    params.q = inputSearch.value;
+const handleSearch = () => {
+    params.q = inputSearch.value.trim();
     drawProduct();
-})
+}
+
+searchButton.addEventListener("click", handleSearch);
+inputSearch.addEventListener("input", handleSearch);

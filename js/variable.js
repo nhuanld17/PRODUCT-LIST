@@ -1,3 +1,3 @@
-export const params = {
+export let params = {
     q: "",
 }
