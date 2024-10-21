@@ -4,8 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    
+    <h2>Danh mục sản phẩm</h2>
+
+    <div class="category__list" id="category">
+        <button class="category__item">
+            Category 0
+        </button>
+    </div>
+
+    <h2>Danh sách sản phẩm</h2>
+
+    <div class="products" id="products">
+        <div class="product__item">
+            <div class="product__image">
+                <img src="" alt="">
+                <div class="product__discount">
+                    X%
+                </div>
+            </div>
+            <div class="product__content">
+                <h3 class="product__title">Product title</h3>
+                <div class="product__meta">
+                    <div class="product__price">100$</div>
+                    <div class="product__quantity">Stock: 10</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./js/category.js"></script>
 </body>
 </html>
