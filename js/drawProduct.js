@@ -33,27 +33,30 @@ export const drawProduct = async () => {
         });
     }
 
-        // Sắp xếp
-        if (params.sortField !== "default") {
-            filteredProducts.sort((a, b) => {
-                if (params.sortField === "price") {
-                    return a.price - b.price;
-                }
-    
-                if (params.sortField === "-price") {
-                    return b.price - a.price;
-                }
-    
-                if (params.sortField === "discountPercentage") {
-                    return b.discountPercentage - a.discountPercentage;
-                }
-            });
-        }
+    // Sắp xếp
+    if (params.sortField !== "default") {
+        filteredProducts.sort((a, b) => {
+            if (params.sortField === "price") {
+                return a.price - b.price;
+            }
 
+            if (params.sortField === "-price") {
+                return b.price - a.price;
+            }
 
+            if (params.sortField === "discountPercentage") {
+                return b.discountPercentage - a.discountPercentage;
+            }
+        });
+    }
+
+    // Phân trang nè
+    const startIndex = (params.currentPage - 1) * params.itemsPerPage;
+    const endIndex = startIndex + params.itemsPerPage;
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
     // Hiển thị sản phẩm
-    let htmls = filteredProducts.map((product) => {
+    let htmls = paginatedProducts.map((product) => {
         return `
             <div class="product__item">
                 <div class="product__image">
@@ -73,6 +76,34 @@ export const drawProduct = async () => {
         `;
     });
 
-    product.innerHTML = htmls.join("");
+    product.innerHTML = htmls.join("") || "<p>Không có sản phẩm nào</p>";
+
+    // Hiển thị nút phân trang
+    const totalPages = Math.ceil(filteredProducts.length / params.itemsPerPage);
+    const paginations = document.getElementById("pagination");
+    paginations.innerHTML = `
+        <button ${params.currentPage === 1 ? "disabled" : ""} id = "prevPage">Previous</button>
+        <span>Page ${params.currentPage} of ${totalPages}</span>
+        <button ${params.currentPage === totalPages ? "disabled" : ""} id = "nextPage">Next</button>
+    `;
+
+    // Thêm sự kiện cho nút phân trang
+    const prevPageButton = document.getElementById("nextPage");
+    console.log(prevPageButton);
+    prevPageButton.addEventListener("click", () => {
+        if (params.currentPage < totalPages) {
+            params.currentPage++;
+            drawProduct();
+        }
+    })
+
+    const nextPageButton = document.getElementById("prevPage");
+    console.log(nextPageButton);
+    nextPageButton.addEventListener("click", () => {
+        if(params.currentPage > 1){
+            params.currentPage--;
+            drawProduct();
+        }
+    })
 }
 

@@ -9,6 +9,7 @@ const inputSearch = document.querySelector("#search input");
 
 const handleSearch = () => {
     params.q = inputSearch.value.trim();
+    params.currentPage = 1;
     drawProduct();
 }
 
@@ -35,5 +36,6 @@ filter.addEventListener("change", (e) => {
         default:
             break;
     }
+    params.currentPage = 1;
     drawProduct();
 })

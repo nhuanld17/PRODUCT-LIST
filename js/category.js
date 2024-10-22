@@ -32,7 +32,7 @@ fetchAPI(API_CATEGORY)
     categoryButtons.forEach(categoryButton => {
         categoryButton.addEventListener("click", () => {
             params.category = categoryButton.textContent.trim();
-            console.log(params.category);
+            params.currentPage = 1;
             drawProduct();
         })
     });
